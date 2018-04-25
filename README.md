@@ -1,9 +1,9 @@
 # CS 686-02 Spring, 2018
 
-## Homework 4
+## Lab 3
 
-Implement knn
+Implement decision_tree
 
-call test_knn.py to get the accuracy result from k = 2 to 12
+call test_decision_tree.py to get the tree and see the prediction for original data
 
-you can predict by call xxx.predict(yourDataSet) to get the possible labels for your data
+You can change the last parameter in fit, from 'e' to 'g' to use gini instead of entropy
