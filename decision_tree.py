@@ -6,7 +6,6 @@ class decision_tree(classifier):
         self.X = None
         self.Y = None
         self.this_tree = dict()
-        pass
 
     def fit(self, X, Y):
         fit(X, Y, 'g')
@@ -14,7 +13,7 @@ class decision_tree(classifier):
     def fit(self, X, Y, method):
         self.Y = Y
         self.X = X
-        self.build_tree(X, Y, method)
+        self.this_tree = self.build_tree(X, Y, method)
         return self.this_tree
 
     def build_tree(self, X, Y, method):
@@ -34,21 +33,19 @@ class decision_tree(classifier):
         elif method == "e":
             best_feature = self.choose_feature_e(X, Y)
 
-        if best_feature < 0 or best_feature >= len(X[0]):
-            return self.this_tree
-
+        this_tree = dict()
         feature_values = [example[best_feature] for example in X]
         unique_values = set(feature_values)
 
         for value in unique_values:
             # Build a node with each unique value:
             subtree_x, subtree_y = self.split_data(X, Y, best_feature, value)
-            if best_feature not in self.this_tree:
-                self.this_tree[best_feature] = dict()
-            if value not in self.this_tree[best_feature]:
-                self.this_tree[best_feature][value] = 0
-            self.this_tree[best_feature][value] = self.build_tree(subtree_x, subtree_y, method)
-        return self.this_tree
+            if best_feature not in this_tree:
+                this_tree[best_feature] = dict()
+            if value not in this_tree[best_feature]:
+                this_tree[best_feature][value] = 0
+            this_tree[best_feature][value] = self.build_tree(subtree_x, subtree_y, method)
+        return this_tree
 
     def predict(self, X):
         hyp = []
